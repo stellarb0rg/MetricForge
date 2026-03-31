@@ -1,0 +1,7 @@
+timestamp,event_type,event_count,unique_users,anomaly_flag
+2026-03-30T10:00:00Z,signup,120,95,0
+2026-03-30T11:00:00Z,signup,135,102,0
+2026-03-30T12:00:00Z,signup,410,300,1
+2026-03-30T10:00:00Z,purchase,18,15,0
+2026-03-30T11:00:00Z,purchase,22,19,0
+2026-03-30T12:00:00Z,purchase,60,45,1

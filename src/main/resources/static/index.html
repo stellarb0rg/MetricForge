@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metric Forge</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Metric Forge</p>
+      <h1>Event Analytics Console</h1>
+      <p class="subtitle">Ingest events, query metrics, and watch internal health in real time.</p>
+      <div class="hero-actions">
+        <button class="btn" id="refreshAll">Refresh All</button>
+        <span class="status" id="lastUpdated">Last updated: --</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <div class="card-header">
+        <h2>Internal Metrics</h2>
+        <span class="pill">/internal/metrics</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="label">Queue Size</div>
+          <div class="value" id="queueSize">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Accepted</div>
+          <div class="value" id="accepted">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Rejected</div>
+          <div class="value" id="rejected">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Persisted</div>
+          <div class="value" id="persisted">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Batch Failures</div>
+          <div class="value" id="batchFailures">--</div>
+        </div>
+      </div>
+      <div class="latency">
+        <h3>Latency</h3>
+        <div class="latency-row">
+          <div class="latency-name">Batch Insert</div>
+          <div class="latency-values" id="latencyBatch">--</div>
+        </div>
+        <div class="latency-row">
+          <div class="latency-name">Count Query</div>
+          <div class="latency-values" id="latencyCount">--</div>
+        </div>
+        <div class="latency-row">
+          <div class="latency-name">Unique Users</div>
+          <div class="latency-values" id="latencyUnique">--</div>
+        </div>
+      </div>
+      <div class="card-footer" id="internalError"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>Metrics Explorer</h2>
+        <span class="pill">/metrics</span>
+      </div>
+      <form class="form" id="metricsForm">
+        <label>
+          <span>Event Type</span>
+          <input type="text" name="eventType" placeholder="signup" required />
+        </label>
+        <label>
+          <span>Start (local)</span>
+          <input type="datetime-local" name="start" required />
+        </label>
+        <label>
+          <span>End (local)</span>
+          <input type="datetime-local" name="end" required />
+        </label>
+        <div class="form-actions">
+          <button class="btn" type="button" id="countBtn">Count Events</button>
+          <button class="btn secondary" type="button" id="uniqueBtn">Unique Users</button>
+        </div>
+      </form>
+      <div class="result" id="metricsResult">Waiting for query.</div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>ML Insights</h2>
+        <span class="pill">/ml/summary</span>
+      </div>
+      <form class="form" id="mlForm">
+        <label>
+          <span>Event Type</span>
+          <input type="text" name="eventType" placeholder="signup" required />
+        </label>
+        <label>
+          <span>Start (local)</span>
+          <input type="datetime-local" name="start" required />
+        </label>
+        <label>
+          <span>End (local)</span>
+          <input type="datetime-local" name="end" required />
+        </label>
+        <div class="form-actions">
+          <button class="btn" type="button" id="mlBtn">Run Summary</button>
+        </div>
+      </form>
+      <div class="result" id="mlResult">Waiting for summary.</div>
+    </section>
+
+    <section class="card full">
+      <div class="card-header">
+        <h2>Ingest Events</h2>
+        <span class="pill">/events</span>
+      </div>
+      <div class="ingest-grid">
+        <div>
+          <p class="helper">Send a batch of events. Timestamps must be ISO-8601 (UTC recommended).</p>
+          <textarea id="ingestPayload" spellcheck="false"></textarea>
+          <div class="form-actions">
+            <button class="btn" id="ingestBtn">Send Batch</button>
+            <button class="btn ghost" id="sampleBtn" type="button">Load Sample</button>
+          </div>
+        </div>
+        <div>
+          <div class="result" id="ingestResult">No batch sent yet.</div>
+          <div class="callout">
+            <h3>Tips</h3>
+            <ul>
+              <li>Use snake_case keys: <code>event_id</code>, <code>user_id</code>, <code>event_type</code>, <code>event_time</code>.</li>
+              <li>Batching 10-100 events is typical.</li>
+              <li>Query metrics after ingestion to validate.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Metric Forge • Local console</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
